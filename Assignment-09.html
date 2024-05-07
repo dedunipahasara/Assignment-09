@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment-09</title>
+    <style>
+        h1{
+            left:750px;
+            position:fixed;
+            top:200px;
+            color: #f5aaaa;
+            text-align: center;
+        }
+        .line {
+            width:800px;
+
+            display: inline-flex;
+            border-top: 2px solid #ffffff;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        main {
+            width: fit-content;
+            height: fit-content;
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        #light-panel {
+            top:20px;
+            display: flex;
+            width: fit-content;
+            height: fit-content;
+            margin: auto;
+        }
+
+        #button-grp {
+            text-align: center;
+            margin: 10px 0px;
+        }
+
+        .light {
+            width: 100px;
+            aspect-ratio: 2/1;
+            border: 2px solid black;
+            background-color: white;
+            border-radius:20px ;
+        }
+        body{
+            background-color: black;
+        }
+
+
+
+        .light_on {
+            background: red;
+            box-shadow: 0px 0px 20px red;
+        }
+        .light_on2 {
+            background: #fe0d0d;
+            box-shadow: 0px 0px 20px #f9133e;
+        }
+        .light_on3{
+            background: #e3163d;
+            box-shadow: 0px 0px 20px #fb2052;
+        }
+        .light_on4{
+            background: #f03535;
+            box-shadow: 0px 0px 20px #e04646;
+        }
+        .light_on5{
+
+            background: #f5475b;
+            box-shadow: 0px 0px 20px #e05f77;
+
+        }
+        .light_on6{
+
+            background: #df6868;
+            box-shadow: 0px 0px 20px #e78f8f;
+
+        }
+        button{
+            background-color: #513b64;
+            position: relative;
+            top: 200px;
+            width: 150px;
+            height: 50px;
+            font-weight: bolder;
+            border-radius: 10px;
+            margin-right:50px;
+            border: 2px solid White;
+            color:white;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<h1>JavaScript Knight Rider</h1>
+
+<main>
+    <hr class="line">
+
+    <!-- Light Panel -->
+    <section id="light-panel">
+
+        <div class="light"></div> <!-- light 01 -->
+        <div class="light"></div> <!-- light 02 -->
+        <div class="light"></div> <!-- light 03 -->
+        <div class="light"></div> <!-- light 04 -->
+        <div class="light"></div> <!-- light 05 -->
+        <div class="light"></div> <!-- light 06 -->
+    </section>
+    <hr class="line">
+
+    <!-- Button Panel -->
+    <section id="button-grp">
+        <button type="button" id="start">Start</button>
+        <button type="button" id="stop">Stop</button>
+    </section>
+</main>
+
+<audio id="audio" src="assert/audio.mp3"></audio>
+<script src="assert/jquery-3.7.1.min.js.js"></script>
+<<script>
+    var current_light_index = 0;
+    var max_light_count = 6;
+    var move = "RIGHT"; // RIGHT or LEFT
+
+    var myInterval = null;
+
+    function updateLightPanel() {
+        $(".light").removeClass("light_on");
+        $(".light").removeClass("light_on2");
+        $(".light").removeClass("light_on3");
+        $(".light").removeClass("light_on4");
+        $(".light").removeClass("light_on5");
+        $(".light").removeClass("light_on6");
+
+        $(".light").eq(current_light_index).addClass("light_on");
+
+        if(move==="RIGHT") {
+            if(current_light_index!==0) {
+                $(".light").eq(current_light_index-1).addClass("light_on2");
+                $(".light").eq(current_light_index-2).addClass("light_on3");
+                $(".light").eq(current_light_index-3).addClass("light_on4");
+                $(".light").eq(current_light_index-4).addClass("light_on5");
+                $(".light").eq(current_light_index-5).addClass("light_on6");
+            }
+
+            ++current_light_index;
+            if(current_light_index>max_light_count - 2) {
+                move = "LEFT";
+            }
+
+        } else {
+            $(".light").eq(current_light_index+1).addClass("light_on2");
+            $(".light").eq(current_light_index+2).addClass("light_on3");
+            $(".light").eq(current_light_index+3).addClass("light_on4");
+            $(".light").eq(current_light_index+4).addClass("light_on5");
+            $(".light").eq(current_light_index+5).addClass("light_on6");
+
+            --current_light_index;
+            if(current_light_index===0) {
+                move = "RIGHT";
+            }
+        }
+
+    }
+
+    $("#start").on("click", () => {
+        myInterval = setInterval(updateLightPanel, 50);
+        $("#audio")[0].play();
+    });
+
+    $("#stop").on("click", () => {
+        myInterval = clearInterval(myInterval);
+        $("#audio")[0].pause();
+    });
+
+</script>
+
+</body>
+</html>
